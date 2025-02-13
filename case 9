@@ -1,0 +1,14 @@
+case 9:
+        ledcWrite(cArmServo, 2200);// bring arm to top position
+        if (Serial2.available() > 0 && ServoPointForMovement > 500) {                                 // if data available and servo isnt at min position
+          receivedData = Serial2.read();
+          if(receivedData != 'u'){// if received data is not u, the correct position for the arm
+              if (cycles >= 200) {                                           // 200 cycles = ~200 ms
+                cycles = 0;
+                 ServoPointForMovement = ServoPointForMovement - 10; // begin to lower the arm in attempt to get to the correct position
+              }
+              ledcWrite(cArmServo, ServoPointForMovement);                        // lower servo position
+          }
+          robotModeIndex=10;
+        }
+          break;
